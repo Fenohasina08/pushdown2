@@ -1,0 +1,54 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Fichiers de corbeille
+.trash/
+.Trash/
+.local/share/Trash/
+**/.local/share/Trash/
+
+# Fichiers de configuration personnels
+.git-credentials
+.gitconfig
+.bash_history
+.zsh_history
+.node_repl_history
+.psql_history
+.wget-hsts
+
+# Répertoires personnels
+Documents/
+Downloads/
+Pictures/
+Programmes/
+snap/
+
+# Fichiers d'installation
+*.deb
+*.rpm
+*.tar.gz
+*.zip
+*.exe
+
+# Caches
+.cache/
+.gradle/
+.m2/
+.npm/
+.nvm/
+.java/
+.jdks/
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# Fichiers temporaires
+*~
+*.bak
