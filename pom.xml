@@ -11,6 +11,18 @@
       <version>42.7.3</version>
     </dependency>
   </dependencies>
-  <name>Archetype - pushdown2</name>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>15</source>
+                    <target>15</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <name>Archetype - pushdown2</name>
   <url>http://maven.apache.org</url>
 </project>

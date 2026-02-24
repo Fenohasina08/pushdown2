@@ -10,5 +10,7 @@ public class Main {
 
         System.out.println("Q3: " + retriever.countValidVotesByCandidate());
 
+        System.out.println("Q4: " + retriever.computeVoteSummary());
+
     }
 }
