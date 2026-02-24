@@ -20,5 +20,13 @@ public class Main {
             tauxFormate = String.valueOf(taux);
         }
         System.out.println("Q5: taux de participation = " + tauxFormate + "%");
+
+        ElectionResult winner = retriever.findWinner();
+        System.out.println("Q6: candidate_name | valid_vote_count");
+        if (winner != null) {
+            System.out.println(winner.getCandidateName() + " | " + winner.getValidVoteCount());
+        } else {
+            System.out.println("Aucun gagnant");
+        }
     }
 }
