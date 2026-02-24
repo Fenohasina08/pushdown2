@@ -19,4 +19,6 @@ public class DataRetriever {
             throw new RuntimeException("❌ Q1 Erreur", e);
         }
     }
+
+
 }
