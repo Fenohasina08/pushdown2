@@ -23,11 +23,10 @@ public class VoteTypeCount {
         this.count = count;
     }
 
-    @Override
+     @Override
     public String toString() {
-        return "VoteTypeCount{" +
-                "count=" + count +
-                ", voteType='" + voteType + '\'' +
+        return "VoteTypeCount{voteType='" + voteType + '\'' +
+                ", count=" + count +
                 '}';
     }
 }

@@ -5,5 +5,8 @@ public class Main {
 
         long totalVote = retriever.countAllVotes();
         System.out.println("totalVote=" + totalVote);
+
+        System.out.println("Q2: " + retriever.countVotesByType());
+
     }
 }
