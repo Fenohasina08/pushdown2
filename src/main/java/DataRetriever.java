@@ -40,4 +40,27 @@ public class DataRetriever {
             throw new RuntimeException("❌ Q2 Erreur", e);
         }
     }
+
+    public List<CandidateVoteCount> countValidVotesByCandidate() {
+        String sql = "SELECT candidate.name AS candidate_name, COUNT(vote.id) AS valid_vote " +
+                "FROM candidate " +
+                "LEFT JOIN vote ON candidate.id = vote.candidate_id AND vote.vote_type = 'VALID' " +
+                "GROUP BY candidate.id, candidate.name " +
+                "ORDER BY candidate.name";
+
+        try (Connection conn = dbConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            List<CandidateVoteCount> result = new ArrayList<>();
+            while (rs.next()) {
+                result.add(new CandidateVoteCount(
+                        rs.getString("candidate_name"),
+                        rs.getLong("valid_vote")
+                ));
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException("❌ Q3 Erreur", e);
+        }
+    }
 }
