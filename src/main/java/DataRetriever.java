@@ -113,5 +113,26 @@ public class DataRetriever {
         return ((double) totalVotes / totalElectors) * 100;
     }
 
+    public ElectionResult findWinner() {
+        String sql = "SELECT candidate.name, COUNT(vote.id) AS valid_vote_count " +
+                "FROM candidate " +
+                "LEFT JOIN vote ON candidate.id = vote.candidate_id AND vote.vote_type = 'VALID' " +
+                "GROUP BY candidate.id, candidate.name " +
+                "ORDER BY valid_vote_count DESC, candidate.name " +
+                "LIMIT 1";
+        try (Connection conn = dbConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                String name = rs.getString("name");
+                long count = rs.getLong("valid_vote_count");
+                return new ElectionResult(name, count);
+            } else {
+                 return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("❌ Q6 Erreur lors de la recherche du gagnant", e);
+        }
+    }
 }
 
