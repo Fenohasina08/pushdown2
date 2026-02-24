@@ -39,8 +39,7 @@ public class CandidateVoteCount {
 
     @Override
     public String toString() {
-        return "CandidateVoteCount{candidateName='" + candidateName + '\'' +
-                ", validVoteCount=" + validVoteCount +
-                '}';
+        return candidateName + "=" + validVoteCount;
     }
+
 }
