@@ -91,5 +91,27 @@ public class DataRetriever {
         }
     }
 
+    public double computeTurnoutRate() {
+        long totalVotes = countAllVotes();
+        long totalElectors = 0;
+
+         String sql = "SELECT COUNT(id) AS total FROM voter";
+
+        try (Connection conn = dbConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                totalElectors = rs.getLong("total");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("❌ Q5 Erreur lors de la récupération du nombre d'électeurs", e);
+        }
+
+        if (totalElectors == 0) {
+            return 0.0;
+        }
+        return ((double) totalVotes / totalElectors) * 100;
+    }
+
 }
 
