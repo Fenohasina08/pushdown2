@@ -41,26 +41,55 @@ public class DataRetriever {
         }
     }
 
-    public List<CandidateVoteCount> countValidVotesByCandidate() {
-        String sql = "SELECT candidate.name AS candidate_name, COUNT(vote.id) AS valid_vote " +
+        public List<CandidateVoteCount> countValidVotesByCandidate() {
+            String sql = "SELECT candidate.name AS candidate_name, COUNT(vote.id) AS valid_vote " +
                 "FROM candidate " +
                 "LEFT JOIN vote ON candidate.id = vote.candidate_id AND vote.vote_type = 'VALID' " +
                 "GROUP BY candidate.id, candidate.name " +
                 "ORDER BY candidate.name";
 
+            try (Connection conn = dbConnection.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+                List<CandidateVoteCount> result = new ArrayList<>();
+                while (rs.next()) {
+                    result.add(new CandidateVoteCount(
+                        rs.getString("candidate_name"),
+                        rs.getLong("valid_vote")
+                                                        ));
+                                }
+                        return result;
+                }
+            catch (SQLException e) {
+                        throw new RuntimeException("❌ Q3 Erreur", e);
+                                }
+        }
+
+    public VoteSummary computeVoteSummary() {
+        String sql = """
+        SELECT 
+            COUNT(CASE WHEN vote_type='VALID' THEN 1 END) AS valid_count,
+            COUNT(CASE WHEN vote_type='BLANK' THEN 1 END) AS blank_count,
+            COUNT(CASE WHEN vote_type='NULL' THEN 1 END) AS null_count
+        FROM vote
+        """;
+
         try (Connection conn = dbConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            List<CandidateVoteCount> result = new ArrayList<>();
-            while (rs.next()) {
-                result.add(new CandidateVoteCount(
-                        rs.getString("candidate_name"),
-                        rs.getLong("valid_vote")
-                ));
+
+            if (rs.next()) {
+                return new VoteSummary(
+                        rs.getLong("valid_count"),
+                        rs.getLong("blank_count"),
+                        rs.getLong("null_count")
+                );
             }
-            return result;
+            return new VoteSummary(0, 0, 0);
         } catch (SQLException e) {
-            throw new RuntimeException("❌ Q3 Erreur", e);
+            throw new RuntimeException("❌ Q4 Erreur", e);
         }
     }
+
 }
+
