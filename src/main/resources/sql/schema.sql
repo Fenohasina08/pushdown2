@@ -1,19 +1,15 @@
--- Type enum
-CREATE TYPE invoice_status AS ENUM ('DRAFT', 'CONFIRMED', 'PAID');
 
--- Table invoice
-CREATE TABLE invoice (
-    id SERIAL PRIMARY KEY,
-    customer_name VARCHAR NOT NULL,
-    status invoice_status
+
+CREATE TABLE voter (
+                       id serial primary key ,
+                       name text not null
 );
 
--- Table invoice_line
-CREATE TABLE invoice_line (
-    id SERIAL PRIMARY KEY,
-    invoice_id INT NOT NULL REFERENCES invoice(id),
-    label VARCHAR NOT NULL,
-    quantity INT NOT NULL,
-    unit_price NUMERIC(10,2) NOT NULL
+create type vote_type as enum ('VALID','BLANK','NULL');
+
+create table vote (
+                      id serial primary key ,
+                      candidate_id int references candidate(id),
+                      voter_id int not null references voter(id),
+                      vote_type vote_type not null
 );
-//sum case when
