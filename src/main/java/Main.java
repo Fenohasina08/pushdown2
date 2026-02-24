@@ -8,5 +8,7 @@ public class Main {
 
         System.out.println("Q2: " + retriever.countVotesByType());
 
+        System.out.println("Q3: " + retriever.countValidVotesByCandidate());
+
     }
 }
