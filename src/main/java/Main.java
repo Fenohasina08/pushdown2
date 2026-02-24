@@ -12,5 +12,13 @@ public class Main {
 
         System.out.println("Q4: " + retriever.computeVoteSummary());
 
+        double taux = retriever.computeTurnoutRate();
+        String tauxFormate;
+        if (taux == Math.floor(taux)) {
+            tauxFormate = String.valueOf((int) taux);
+        } else {
+            tauxFormate = String.valueOf(taux);
+        }
+        System.out.println("Q5: taux de participation = " + tauxFormate + "%");
     }
 }
